@@ -8,7 +8,10 @@ import javax.persistence.Id
 
 @Entity
 data class EmailForm(
-    @Id @GeneratedValue(generator = "UUID") @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @Id @GeneratedValue(generator = "UUID") @GenericGenerator(
+        name = "UUID",
+        strategy = "org.hibernate.id.UUIDGenerator"
+    )
     val id: String = "",
     val formName: String,
     val forwardTo: String

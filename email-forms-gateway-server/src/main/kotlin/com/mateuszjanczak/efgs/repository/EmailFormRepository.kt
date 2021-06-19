@@ -1,7 +1,7 @@
 package com.mateuszjanczak.efgs.repository
 
 import com.mateuszjanczak.efgs.entity.EmailForm
-import org.springframework.data.repository.CrudRepository
+import org.springframework.data.jpa.repository.JpaRepository
 
-interface EmailFormRepository: CrudRepository<EmailForm, String> {
+interface EmailFormRepository : JpaRepository<EmailForm, String> {
 }
