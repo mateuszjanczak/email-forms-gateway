@@ -1,25 +1,66 @@
-import logo from './logo.svg';
-import './App.css';
+import Table from "./components/Table";
+import Navbar from "./components/Navbar";
+import {Component} from "react";
+import Modal from "./components/Modal";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+
+    state = {
+        items: [],
+        isModalVisible: false
+    }
+
+    componentDidMount() {
+        this.fetchItems();
+    }
+
+    fetchItems = () => {
+        fetch(`http://localhost:8080/api/forms`)
+            .then((res) => res.json())
+            .then((items) => this.setState({items}))
+    }
+
+    newItem = ({ formName, forwardTo }) => {
+        return fetch(`http://localhost:8080/api/forms`, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({
+                formName,
+                forwardTo
+            })
+        }).then(() => {
+            this.fetchItems()
+        })
+    }
+
+    toggleModal = () => {
+        this.setState({
+            isModalVisible: !this.state.isModalVisible
+        })
+    }
+
+    render() {
+        const { items, isModalVisible } = this.state;
+        return (
+            <>
+                <Navbar/>
+
+                <div className="container grid-xl mt-2">
+                    <Table items={items}/>
+                    <div className="mt-2">
+                        <button className="btn float-right" onClick={this.toggleModal}>Add new form</button>
+                    </div>
+                </div>
+
+                {isModalVisible &&
+                    <Modal closeFn={this.toggleModal} submitFn={this.newItem}/>
+                }
+            </>
+        );
+    }
 }
 
 export default App;

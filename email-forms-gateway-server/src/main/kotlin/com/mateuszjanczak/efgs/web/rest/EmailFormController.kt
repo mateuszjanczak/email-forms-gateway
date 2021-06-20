@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*
 import javax.servlet.http.HttpServletRequest
 
 @RestController
+@CrossOrigin
 class EmailFormController(private val emailFormService: EmailFormService) {
 
     @PostMapping(EmailFormEndpoints.FORMS)
@@ -17,7 +18,7 @@ class EmailFormController(private val emailFormService: EmailFormService) {
     @GetMapping(EmailFormEndpoints.FORMS)
     fun listForm() = emailFormService.listEmailForm()
 
-    @RequestMapping(EmailFormEndpoints.FORMS_ID)
+    @PostMapping(EmailFormEndpoints.FORMS_ID)
     fun handleForm(@PathVariable id: String, request: HttpServletRequest) =
         emailFormService.handleEmailForm(id, getJsonFromRequest(request))
 
