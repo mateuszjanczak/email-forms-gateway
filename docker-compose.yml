@@ -1,0 +1,15 @@
+version: '3.9'
+
+services:
+  email-forms-gateway-server:
+    build: email-forms-gateway-server
+    ports:
+      - "8080:8080"
+  email-forms-gateway-client:
+    build: email-forms-gateway-client
+    environment:
+      - REACT_APP_API_URL=http://localhost:8080
+    ports:
+      - "3000:3000"
+    depends_on:
+      - email-forms-gateway-server

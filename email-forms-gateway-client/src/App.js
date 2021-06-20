@@ -15,13 +15,13 @@ class App extends Component {
     }
 
     fetchItems = () => {
-        fetch(`http://localhost:8080/api/forms`)
+        fetch(`${process.env.REACT_APP_API_URL}/api/forms`)
             .then((res) => res.json())
             .then((items) => this.setState({items}))
     }
 
     newItem = ({ formName, forwardTo }) => {
-        return fetch(`http://localhost:8080/api/forms`, {
+        return fetch(`${process.env.REACT_APP_API_URL}/api/forms`, {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
