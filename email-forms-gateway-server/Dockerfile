@@ -6,7 +6,7 @@ COPY pom.xml .
 
 RUN mvn -B dependency:resolve dependency:resolve-plugins
 
-COPY src .
+COPY src ./src
 
 RUN mvn package
 
